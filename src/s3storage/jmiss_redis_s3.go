@@ -28,9 +28,12 @@ type PutObjectResult struct {
 	Size uint64
 	Md5  string
 }
-func NewS3Storage() *S3Storage(accessKeyId string, accessKeySecret string, s3Url string){
+func NewS3Storage(accessKeyId string, accessKeySecret string, s3Url string) *S3Storage{
 	s3Storage := &S3Storage{}
 	s3Storage.SetAccessKeyId(accessKeyId)
+    s3Storage.SetAccessKeySecret(accessKeySecret)
+    s3Storage.SetS3Url(s3Url)
+    return s3Storage
 }
 
 func (s3Storage *S3Storage)SetAccessKeyId(accessKeyId string){
@@ -81,6 +84,7 @@ func PutObject(sess *s3.S3, ObjFile *os.File, bucket string, object string, size
 	return result, nil
 }
 
+func uploadPart(sess *s3.S3, )
 
 func uploadObject(sess *s3.S3, ObjFile *os.File, bucket string, object string, size uint64) (*PutObjectResult, error) {
 

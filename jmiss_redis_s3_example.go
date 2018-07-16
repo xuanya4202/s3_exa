@@ -18,27 +18,24 @@ import (
 
 func main(){
 	
-	var s3storage S3Storage
-	s3Storage.SetAccessKeyId("4034CAC03D9B83501CDACA21E939B07F")
-	s3storage.SetAccessKeySecret("A6B9EDB77B6EC26B2E8E836F3F9A3936")
-	s3storage.SetS3Url("s3.cn-north-1.jcloudcs.com")
+    s3Storage := s3storage.NewS3Storage("4034CAC03D9B83501CDACA21E939B07F", "A6B9EDB77B6EC26B2E8E836F3F9A3936", "s3.cn-north-1.jcloudcs.com") 
 	
 	// small file
-	result,err := s3storage.PutObjectFromFile("jmiss-redis-backup", "small", "/root/test/small")
+	result,err := s3Storage.PutObjectFromFile("jmiss-redis-backup", "small", "/root/test/small")
 	if nil != err{
 		fmt.Printf(" put small object from file failed! err:%v \n", err)
 		return
 	}
 	fmt.Printf(" put small object from file ok! size:%d md5:%s \n", result.Size, result.Md5)
 
-	err = s3storage.GetObjectToFile("jmiss-redis-backup", "small", "/root/test/smallget", result)
+	err = s3Storage.GetObjectToFile("jmiss-redis-backup", "small", "/root/test/smallget", result)
 	if nil != err{
 		fmt.Printf(" get small object to file failed! err:%v \n", err)
 		return
 	}
 	fmt.Printf(" get small object to file ok!\n")
 	
-	err = s3storage.DeleteObject("jmiss-redis-backup", "small")
+	err = s3Storage.DeleteObject("jmiss-redis-backup", "small")
 	if nil != err{
 		fmt.Printf(" delete small object err:%v \n", err)
 		return
@@ -47,21 +44,21 @@ func main(){
 	
 	
 	// big file
-	result,err = s3storage.PutObjectFromFile("jmiss-redis-backup", "big", "/root/test/big")
+	result,err = s3Storage.PutObjectFromFile("jmiss-redis-backup", "big", "/root/test/big")
 	if nil != err{
 		fmt.Printf(" put big object from file failed! err:%v \n", err)
 		return
 	}
 	fmt.Printf(" put big object from file ok! size:%d md5:%s \n", result.Size, result.Md5)
 
-	err = s3storage.GetObjectToFile("jmiss-redis-backup", "big", "/root/test/bigget", result)
+	err = s3Storage.GetObjectToFile("jmiss-redis-backup", "big", "/root/test/bigget", result)
 	if nil != err{
 		fmt.Printf(" get big object to file failed! err:%v \n", err)
 		return
 	}
 	fmt.Printf(" get big object to file ok!\n")
 	
-	err = s3storage.DeleteObject("jmiss-redis-backup", "big")
+	err = s3Storage.DeleteObject("jmiss-redis-backup", "big")
 	if nil != err{
 		fmt.Printf(" delete big object err:%v \n", err)
 		return
